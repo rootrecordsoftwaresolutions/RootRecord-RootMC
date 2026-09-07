@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOG = ROOT / ".runtime" / "logs" / "auto-push.log"
 LOCK = ROOT / ".runtime" / "auto-push.lock"
 DENY = (".env", "credentials", ".runtime/", "data/", "logs/", "backups/", ".venv/", "node_modules/")
+HIDDEN_RUN = {"creationflags": 0x08000000} if os.name == "nt" else {}
 
 
 def log(message: str) -> None:
@@ -22,7 +23,7 @@ def log(message: str) -> None:
 
 
 def git(*args: str) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(["git", *args], cwd=ROOT, text=True, capture_output=True)
+    return subprocess.run(["git", *args], cwd=ROOT, text=True, capture_output=True, **HIDDEN_RUN)
 
 
 def allowed(path: str) -> bool:
@@ -55,7 +56,7 @@ def main() -> int:
             return 0
         env = os.environ.copy()
         env.update({"GIT_AUTHOR_NAME": "Ava-Core-Dev", "GIT_AUTHOR_EMAIL": "ava-core-dev@users.noreply.github.com", "GIT_COMMITTER_NAME": "Ava-Core-Dev", "GIT_COMMITTER_EMAIL": "ava-core-dev@users.noreply.github.com"})
-        commit = subprocess.run(["git", "commit", "-m", f"auto: sync {datetime.now().astimezone().strftime('%Y-%m-%d %H:%M %Z')}"], cwd=ROOT, env=env, text=True, capture_output=True)
+        commit = subprocess.run(["git", "commit", "-m", f"auto: sync {datetime.now().astimezone().strftime('%Y-%m-%d %H:%M %Z')}"], cwd=ROOT, env=env, text=True, capture_output=True, **HIDDEN_RUN)
         if commit.returncode:
             log("commit failed")
             return commit.returncode
