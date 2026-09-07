@@ -1,6 +1,7 @@
 .env
 .env.*
 !.env.example
+.runtime/
 credentials*
 *.pem
 *.key

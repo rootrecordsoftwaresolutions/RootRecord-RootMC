@@ -2,6 +2,8 @@
 
 The complete development home for RootMC.
 
+![RootRecord banner](media/banner.jpg)
+
 ## Purpose
 
 All RootMC development belongs here: Minecraft server integrations, Paper plugins, RootMC APIs, web and mobile clients, economy and community systems, schemas, deployment tooling, tests, and documentation.
@@ -20,6 +22,15 @@ RootMC-specific changes should be made here first. Integration contracts with th
 ## Status
 
 Foundation stage for the unified RootMC development repository.
+
+## First Run
+
+Run `install.ps1` on Windows or `./install.sh` on Ubuntu/Debian. Both invoke
+`core/boot.py`, create missing runtime paths, check the host, and install Node
+dependencies when package manifests change. Every step is displayed and saved
+under `.runtime/logs/`. RootMC developers can opt into safe auto-push with
+`scripts/register-auto-push.ps1`, which registers a two-minute task for the
+safe commit/push worker.
 
 ## Lore
 
